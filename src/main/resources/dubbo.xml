@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <context:component-scan base-package="com.aust" />
+
+    <dubbo:application name="order" />
+
+    <dubbo:registry address="zookeeper://106.13.125.253:2181" />
+
+    <dubbo:protocol id = "d1" name="dubbo" port="20880" />
+
+    <dubbo:provider timeout="3000" />
+    <dubbo:consumer timeout="2000" check="false"/>
+
+    <dubbo:service interface="com.aust.service.OrderService"  ref ="orderService" protocol="d1"/>
+
+    <dubbo:reference  id ="productService" interface="com.aust.service.ProductService" />
+
+    <bean  id = "orderService" class = "com.aust.service.impl.OrderServiceImpl" />
+
+
+</beans>
